@@ -5,24 +5,38 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>JSON Read</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
-
     <script type="text/javascript">
-			$("document").ready(function(){
-				//get the XML data and add list items
-				var url = "users.json";
-				$.getJSON(url,  function (data) {
-					 //console.log(data);
-					 //console.log("Printing data.users");
-					 //console.log(data.users);
-					$.each(data, function(i,val){
-						$("<li></li>")
-						.html(val)
-						.appendTo("ul#userList");
-					});
-				});
-			});
+        $("document").ready(function () {
+            //get the JSON data and add list items
+            var url = "users.json";
+            $.getJSON(url, function (data) {
+                //Debugging
+                console.log(data);
+                console.log("Printing data.User");
+                console.log(data.User);
+
+                $.each(data.User, function (i, val) {
+                    var userName = $("<li></li>").html(val.Name);
+                    var Logins = $("<li></li>").html("Logins: ");
+                    var LogTime = $("<ul></ul>");
+                    var ul = $("<ul></ul>");
+                    var li = $("<li></li>");
+
+                    $("<li></li>").html("ID: " + val.ID).appendTo(ul);                  
+                    Logins.appendTo(ul);
+
+                    $.each(val.Login, function (i, date) {
+                        $("<li></li>").html(date).appendTo(LogTime);
+                    })
+                    LogTime.appendTo(Logins);
+                    ul.appendTo(userName);
+                    userName.appendTo("ul#userList");
+                });
+            });
+        });
 
     </script>
+
 </head>
 <body>
     <h1>Reading from and JSON Document using jQuery.getJSON()</h1>
